@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater;
+namespace App\Core\User\Application\Query\GetInActiveUsersEmail;
 
 use App\Core\User\Application\DTO\UserDTO;
 use App\Core\User\Application\Query\GetInActiveUsersEmail\GetInActiveUsersEmailQuery;

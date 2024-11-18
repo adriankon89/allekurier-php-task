@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\UserInterface\Cli;
+namespace App\Core\User\UserInterface\Cli;
 
 use App\Common\Bus\QueryBusInterface;
 use App\Core\User\Application\DTO\UserDTO;
