@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\User\Domain;
 
 use App\Common\EventManager\EventsCollectorTrait;
+use App\Core\User\Domain\Status\UserStatus;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,6 +27,11 @@ class User
      * @ORM\Column(type="string", length=300, nullable=false)
      */
     private string $email;
+
+    /**
+     * @ORM\Column(type="string", length=16, nullable=false, enumType="\App\Core\User\Domain\Status\UserStatus")
+     */
+    private UserStatus $status;
 
     public function __construct(string $email)
     {
