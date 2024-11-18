@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
     name: 'app:user:create',
     description: 'Dodanie nowego użytkownika'
 )]
-final class CreateUser extends Command
+class CreateUser extends Command
 {
     public function __construct(private readonly MessageBusInterface $bus)
     {
