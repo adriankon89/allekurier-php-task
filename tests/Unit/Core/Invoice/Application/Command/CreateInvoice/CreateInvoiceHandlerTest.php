@@ -9,6 +9,7 @@ use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceRepositoryInterface;
 use App\Core\User\Domain\Exception\UserNotFoundException;
 use App\Core\User\Domain\Repository\UserRepositoryInterface;
+use App\Core\User\Domain\Status\UserStatus;
 use App\Core\User\Domain\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -38,9 +39,12 @@ class CreateInvoiceHandlerTest extends TestCase
     public function test_handle_success(): void
     {
         $user = $this->createMock(User::class);
+        $user->method('getStatus')
+            ->willReturn(UserStatus::ACTIVE);
 
         $invoice = new Invoice(
-            $user, 12500
+            $user,
+            12500
         );
 
         $this->userRepository->expects(self::once())
@@ -73,5 +77,20 @@ class CreateInvoiceHandlerTest extends TestCase
         $this->expectException(InvoiceException::class);
 
         $this->handler->__invoke((new CreateInvoiceCommand('test@test.pl', -5)));
+    }
+
+    public function test_handle_invoice_inactive_user(): void
+    {
+        $this->expectException(InvoiceException::class);
+        $this->expectExceptionMessage('Faktura może być utworzona tylko dla aktywnego użytkownika');
+
+        $user = $this->createMock(User::class);
+        $user->method('getStatus')
+            ->willReturn(UserStatus::INACTIVE);
+
+        new Invoice(
+            $user,
+            12500
+        );
     }
 }
